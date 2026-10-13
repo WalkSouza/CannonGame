@@ -1,0 +1,60 @@
+# Cannon Game
+
+## Integrantes
+
+- Walkiria Aparecida de Souza
+- Allan Luis Filipe Oliveira
+
+## Objetivo do projeto
+
+Desenvolver o jogo Cannon Game para Android, com base no Capítulo 6 do livro *Android 6 for Programmers: An App-Driven Approach (3rd Edition)*, aplicando conceitos de programação mobile, animação, desenho gráfico, eventos de toque, threads e reprodução de áudio.
+
+## Funcionalidades implementadas
+
+- Mira do canhão controlada por toque.
+- Disparo de projéteis.
+- Alvos com movimentação automática.
+- Obstáculo com detecção de colisão.
+- Detecção de colisões entre projéteis e elementos do jogo.
+- Controle de tempo da partida.
+- Recompensa de tempo ao atingir alvos e penalidade ao colidir com o obstáculo.
+- Contador de disparos.
+- Efeitos sonoros de disparo, acerto e colisão.
+- Tela de resultado ao vencer ou esgotar o tempo.
+- Opção de iniciar uma nova partida.
+- Animação quadro a quadro utilizando `Canvas` e `Paint`.
+- Game loop com thread para atualização dos elementos.
+- Uso de `SurfaceView` e `SurfaceHolder`.
+- Modo imersivo e tela cheia.
+
+## Tecnologias utilizadas
+
+- Java
+- Android Studio
+- Android SDK
+- Canvas e Paint
+- SurfaceView e SurfaceHolder
+- Threads e game loop
+- SoundPool
+
+## Como executar a aplicação
+
+1. Clone ou baixe este repositório do GitHub.
+2. Abra o projeto no Android Studio.
+3. Aguarde a sincronização do Gradle.
+4. Utilize um emulador Android ou conecte um dispositivo compatível.
+5. Execute o aplicativo pelo botão **Run** do Android Studio.
+
+## Como jogar
+
+1. Toque na tela e mova o dedo para ajustar a mira do canhão.
+2. Solte o dedo para disparar.
+3. Tente atingir todos os alvos antes que o tempo termine.
+4. Evite atingir o obstáculo, pois ele provoca uma penalidade de tempo.
+5. Ao terminar a partida, selecione **Jogar novamente** para recomeçar.
+
+## Referência
+
+DEITEL, Paul; DEITEL, Harvey; WALD, Alexander. *Android 6 for Programmers: An App-Driven Approach*. 3. ed.
+
+Projeto acadêmico desenvolvido para a disciplina de Programação III.
