@@ -1,6 +1,7 @@
 
 package com.deitel.cannongame;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -50,6 +51,7 @@ public class CannonView extends SurfaceView
     private volatile double timeRemaining = 60.0;
     private volatile int shotsFired = 0;
     private volatile boolean gameOver = false;
+    private volatile boolean gameStarted = false;
 
     //Recursos extras
     private volatile int score = 0;
@@ -243,7 +245,7 @@ public class CannonView extends SurfaceView
     }
 
     private void updatePositions(double interval) {
-        if (gameOver) {
+        if (!gameStarted || gameOver) {
             return;
         }
 
@@ -400,6 +402,15 @@ public class CannonView extends SurfaceView
                             drawGame(getHolder());
                         }
                 )
+                .setNegativeButton(
+                        "Sair",
+                        (dialog, which) -> {
+                            stopGameThread();
+                            if (getContext() instanceof android.app.Activity) {
+                                ((android.app.Activity) getContext()).finish();
+                            }
+                        }
+                )
                 .setCancelable(false)
                 .show();
     }
@@ -452,6 +463,7 @@ public class CannonView extends SurfaceView
         stopGameThread();
     }
 
+    @SuppressLint("ThreadConstraint")
     private void startGameThread() {
         if (gameRunning) {
             return;
@@ -589,6 +601,24 @@ public class CannonView extends SurfaceView
                             resultPaint
                     );
                 }
+
+                if (!gameStarted) {
+                    canvas.drawColor(Color.argb(200, 255, 255, 255));
+
+                    canvas.drawText(
+                            "CANNON GAME",
+                            canvas.getWidth() / 2f,
+                            canvas.getHeight() / 2f - 60,
+                            resultPaint
+                    );
+
+                    canvas.drawText(
+                            "TOQUE PARA COMEÇAR",
+                            canvas.getWidth() / 2f,
+                            canvas.getHeight() / 2f + 40,
+                            textPaint
+                    );
+                }
             }
         } finally {
             if (canvas != null) {
@@ -600,6 +630,14 @@ public class CannonView extends SurfaceView
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
+
+        if (!gameStarted) {
+            if (action == MotionEvent.ACTION_UP) {
+                gameStarted = true;
+                drawGame(getHolder());
+            }
+            return true;
+        }
 
         if (gameOver) {
             return true;
