@@ -32,4 +32,7 @@ public class Target extends GameElement {
     public int getHitReward() {
         return hitReward;
     }
+    public void accelerate(float factor) {
+        this.velocityY *= factor;
+    }
 }

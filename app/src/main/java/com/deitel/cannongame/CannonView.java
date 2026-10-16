@@ -48,10 +48,12 @@ public class CannonView extends SurfaceView
     private volatile int shotsFired = 0;
     private volatile boolean gameOver = false;
 
-    //Recurso extra 01: sistema de pontuação e multiplicador
+    //Recursos extras
     private volatile int score = 0;
     private volatile int multiplier = 1;
     private static final int SCORE_INCREMENT = 100;
+    private volatile int level = 1;
+
 
 
     private boolean resultDialogShown = false;
@@ -125,6 +127,7 @@ public class CannonView extends SurfaceView
             shotsFired = 0;
             score = 0;
             multiplier = 1;
+            level = 1;
         }
 
         cannon = new Cannon(
@@ -261,6 +264,11 @@ public class CannonView extends SurfaceView
                             timeRemaining += target.getHitReward();
                             score += SCORE_INCREMENT * multiplier;
                             multiplier++;
+                            level++;
+
+                            for (Target t : targets) {
+                                t.accelerate(1.15f);
+                            }
 
                             playSound(targetHitSound);
 
@@ -505,7 +513,7 @@ public class CannonView extends SurfaceView
                 );
 
                 canvas.drawText(
-                        "Pontos: " + score + " (x" + multiplier + ")",
+                        "Pontos: " + score + " (x" + multiplier + ") | Nível: " + level,
                         20,
                         125,
                         textPaint
