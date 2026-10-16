@@ -35,6 +35,9 @@ public class CannonView extends SurfaceView
     private final ArrayList<Target> targets =
             new ArrayList<>();
 
+    private final ArrayList<Particle> particles =
+            new ArrayList<>();
+
     private Blocker blocker;
 
     private volatile boolean gameRunning;
@@ -139,6 +142,10 @@ public class CannonView extends SurfaceView
 
         synchronized (cannonballs) {
             cannonballs.clear();
+        }
+
+        synchronized (particles) {
+            particles.clear();
         }
 
         synchronized (targets) {
@@ -266,6 +273,25 @@ public class CannonView extends SurfaceView
                             multiplier++;
                             level++;
 
+                            //Explosão de partículas
+                            synchronized (particles) {
+                                Random rand = new Random();
+                                for (int p = 0; p < 15; p++) {
+                                    float speed = 100 + rand.nextInt(250);
+                                    double angle = rand.nextDouble() * 2 * Math.PI;
+                                    float pVx = (float) (speed * Math.cos(angle));
+                                    float pVy = (float) (speed * Math.sin(angle));
+                                    particles.add(new Particle(
+                                            target.shape.centerX(),
+                                            target.shape.centerY(),
+                                            target.paint.getColor(),
+                                            pVx,
+                                            pVy,
+                                            Math.max(5, target.shape.width() / 4f)
+                                    ));
+                                }
+                            }
+
                             for (Target t : targets) {
                                 t.accelerate(1.15f);
                             }
@@ -314,6 +340,17 @@ public class CannonView extends SurfaceView
             }
 
             allTargetsDestroyed = targets.isEmpty();
+        }
+
+        synchronized (particles) {
+            Iterator<Particle> particleIterator = particles.iterator();
+            while (particleIterator.hasNext()) {
+                Particle p = particleIterator.next();
+                p.update(interval);
+                if (p.isDead()) {
+                    particleIterator.remove();
+                }
+            }
         }
 
         if (allTargetsDestroyed) {
@@ -493,6 +530,23 @@ public class CannonView extends SurfaceView
                         target.draw(canvas);
                     }
                 }
+
+                synchronized (particles) {
+                    for (Particle p : particles) {
+                        p.draw(canvas);
+                    }
+                }
+
+                canvas.drawText(
+                        String.format(
+                                Locale.getDefault(),
+                                "Tempo: %.1f s",
+                                Math.max(0, timeRemaining)
+                        ),
+                        20,
+                        45,
+                        textPaint
+                );
 
                 canvas.drawText(
                         String.format(
