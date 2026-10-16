@@ -48,6 +48,12 @@ public class CannonView extends SurfaceView
     private volatile int shotsFired = 0;
     private volatile boolean gameOver = false;
 
+    //Recurso extra 01: sistema de pontuação e multiplicador
+    private volatile int score = 0;
+    private volatile int multiplier = 1;
+    private static final int SCORE_INCREMENT = 100;
+
+
     private boolean resultDialogShown = false;
 
     private final SoundPool soundPool;
@@ -117,6 +123,8 @@ public class CannonView extends SurfaceView
             gameOver = false;
             timeRemaining = 60.0;
             shotsFired = 0;
+            score = 0;
+            multiplier = 1;
         }
 
         cannon = new Cannon(
@@ -251,6 +259,8 @@ public class CannonView extends SurfaceView
 
                         if (ball.collidesWith(target)) {
                             timeRemaining += target.getHitReward();
+                            score += SCORE_INCREMENT * multiplier;
+                            multiplier++;
 
                             playSound(targetHitSound);
 
@@ -274,10 +284,12 @@ public class CannonView extends SurfaceView
                     playSound(blockerHitSound);
 
                     timeRemaining -= blocker.getMissPenalty();
+                    multiplier = 1;
                 }
 
                 if (ball.isOffScreen()) {
                     ballIterator.remove();
+                    multiplier = 1;
                 }
             }
         }
@@ -333,8 +345,8 @@ public class CannonView extends SurfaceView
                 .setTitle(title)
                 .setMessage(
                         message
-                                + "\n\nDisparos realizados: "
-                                + shotsFired
+                                + "\n\nPontuação final: " + score
+                                + "\n\nDisparos realizados: " + shotsFired
                 )
                 .setPositiveButton(
                         "Jogar novamente",
@@ -489,6 +501,13 @@ public class CannonView extends SurfaceView
                         "Disparos: " + shotsFired,
                         20,
                         85,
+                        textPaint
+                );
+
+                canvas.drawText(
+                        "Pontos: " + score + " (x" + multiplier + ")",
+                        20,
+                        125,
                         textPaint
                 );
 
