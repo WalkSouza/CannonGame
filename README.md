@@ -63,6 +63,13 @@ Desenvolver o jogo Cannon Game para Android, com base no Capítulo 6 do livro *A
 4. Evite atingir o obstáculo, pois ele provoca uma penalidade de tempo.
 5. Ao terminar a partida, selecione **Jogar novamente** para recomeçar ou **Sair** para encerrar o jogo.
 
+## Capturas de tela
+
+<img width="1280" height="590" alt="1" src="https://github.com/user-attachments/assets/f0ace4cc-9b24-41be-84d0-0d6f6028c4d5" />
+<img width="1280" height="590" alt="2" src="https://github.com/user-attachments/assets/5dde72af-3172-4a98-94c6-bbcbd9c5f60c" />
+<img width="1280" height="590" alt="3" src="https://github.com/user-attachments/assets/6874ea33-54b2-4be5-bfdb-07373a1fee11" />
+<img width="1280" height="590" alt="4" src="https://github.com/user-attachments/assets/0951a076-9c29-43e1-a577-9c4d727f2f35" />
+
 ## Referência
 
 DEITEL, Paul; DEITEL, Harvey; WALD, Alexander. *Android 6 for Programmers: An App-Driven Approach*. 3. ed.
