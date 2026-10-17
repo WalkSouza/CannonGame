@@ -1,6 +1,10 @@
 
 package com.deitel.cannongame;
 
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.os.VibratorManager;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -58,6 +62,8 @@ public class CannonView extends SurfaceView
     private volatile int multiplier = 1;
     private static final int SCORE_INCREMENT = 100;
     private volatile int level = 1;
+    private Vibrator vibrator;
+
 
 
 
@@ -103,6 +109,14 @@ public class CannonView extends SurfaceView
         blockerHitSound =
                 soundPool.load(context, R.raw.blocker_hit, 1);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            VibratorManager vibratorManager =
+                    (VibratorManager) context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE);
+            vibrator = (vibratorManager != null) ? vibratorManager.getDefaultVibrator() : null;
+        } else {
+            vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        }
+
         setFocusable(true);
     }
 
@@ -117,6 +131,21 @@ public class CannonView extends SurfaceView
     public void playSound(int soundId) {
         if (soundId != 0) {
             soundPool.play(soundId, 1, 1, 1, 0, 1);
+        }
+    }
+
+    private void vibrate(long milliseconds) {
+        if (vibrator != null && vibrator.hasVibrator()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(
+                        VibrationEffect.createOneShot(
+                                milliseconds,
+                                VibrationEffect.DEFAULT_AMPLITUDE
+                        )
+                );
+            } else {
+                vibrator.vibrate(milliseconds);
+            }
         }
     }
 
@@ -299,6 +328,8 @@ public class CannonView extends SurfaceView
                             }
 
                             playSound(targetHitSound);
+                            vibrate(40); //Vibração curta
+
 
                             targetIterator.remove();
                             ballIterator.remove();
@@ -318,6 +349,7 @@ public class CannonView extends SurfaceView
 
                     ball.reverseVelocityX();
                     playSound(blockerHitSound);
+                    vibrate(120); //Vibração de penalidade
 
                     timeRemaining -= blocker.getMissPenalty();
                     multiplier = 1;
