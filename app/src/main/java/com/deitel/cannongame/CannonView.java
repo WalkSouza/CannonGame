@@ -188,11 +188,26 @@ public class CannonView extends SurfaceView
             int targetHeight = Math.max(35, screenHeight / 10);
             int spacing = screenWidth / (TARGET_COUNT + 2);
 
+            // Paleta de cores para os alvos.
+            int[] targetColors = {
+                    Color.rgb(220, 50, 50),   // Vermelho
+                    Color.rgb(0, 160, 80),    // Verde
+                    Color.rgb(0, 120, 220),   // Azul
+                    Color.rgb(255, 170, 0),   // Laranja
+                    Color.rgb(160, 50, 210),  // Roxo
+                    Color.rgb(0, 190, 200)    // Ciano
+            };
+
             for (int i = 0; i < TARGET_COUNT; i++) {
                 int x = screenWidth - spacing * (i + 1);
 
+                // Variação de tamanho dos alvos (70% ~ 130%)
+                float sizeScale = 0.7f + random.nextFloat() * 0.6f;
+                int currentWidth = (int) (targetWidth * sizeScale);
+                int currentHeight = (int) (targetHeight * sizeScale);
+
                 int y = random.nextInt(
-                        Math.max(1, screenHeight - targetHeight)
+                        Math.max(1, screenHeight - currentHeight)
                 );
 
                 float speed = 80 + random.nextInt(121);
@@ -201,9 +216,7 @@ public class CannonView extends SurfaceView
                     speed = -speed;
                 }
 
-                int color = (i % 2 == 0)
-                        ? Color.rgb(0, 70, 180)
-                        : Color.rgb(255, 200, 0);
+                int color = targetColors[random.nextInt(targetColors.length)];
 
                 targets.add(new Target(
                         this,
@@ -211,8 +224,8 @@ public class CannonView extends SurfaceView
                         HIT_REWARD,
                         x,
                         y,
-                        targetWidth,
-                        targetHeight,
+                        currentWidth,
+                        currentHeight,
                         speed
                 ));
             }
