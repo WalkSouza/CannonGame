@@ -388,12 +388,28 @@ public class CannonView extends SurfaceView
                 ? "Você destruiu todos os alvos!"
                 : "O tempo acabou! Tente novamente.";
 
+        // Cálculo de precisão
+        int targetsHit = TARGET_COUNT - targets.size();
+        double accuracy = shotsFired > 0
+                ? ((double) targetsHit / shotsFired) * 100.0
+                : 0.0;
+
+        String rank;
+        if (accuracy >= 70.0) {
+            rank = "Atirador de elite 🎯";
+        } else if (accuracy >= 40.0) {
+            rank = "Bom atirador 👍";
+        } else {
+            rank = "Mira torta 🙈";
+        }
+
         new AlertDialog.Builder(getContext())
                 .setTitle(title)
                 .setMessage(
                         message
                                 + "\n\nPontuação final: " + score
-                                + "\n\nDisparos realizados: " + shotsFired
+                                + "\nDisparos realizados: " + shotsFired
+                                + String.format(Locale.getDefault(), "\nPrecisão: %.1f%% (%s)", accuracy, rank)
                 )
                 .setPositiveButton(
                         "Jogar novamente",
