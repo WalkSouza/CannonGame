@@ -3,7 +3,7 @@
 ## Integrantes
 
 - Walkiria Aparecida de Souza
-- Allan Luis Filipe Oliveira
+- Allan Luiz Filipe Oliveira
 
 ## Objetivo do projeto
 
@@ -26,6 +26,14 @@ Desenvolver o jogo Cannon Game para Android, com base no Capítulo 6 do livro *A
 - Game loop com thread para atualização dos elementos.
 - Uso de `SurfaceView` e `SurfaceHolder`.
 - Modo imersivo e tela cheia.
+- Tela inicial com toque para começar.
+- Sistema de pontuação com multiplicador de combo.
+- Dificuldade progressiva por níveis.
+- Efeito visual de partículas na destruição dos alvos.
+- Feedback tátil com vibração nas colisões.
+- Alvos gerados com cores e tamanhos variados.
+- Cálculo de precisão de disparos com classificação no diálogo final.
+- Opção de sair do jogo na tela final.
 
 ## Tecnologias utilizadas
 
@@ -36,6 +44,7 @@ Desenvolver o jogo Cannon Game para Android, com base no Capítulo 6 do livro *A
 - SurfaceView e SurfaceHolder
 - Threads e game loop
 - SoundPool
+- Vibrator e feedback háptico
 
 ## Como executar a aplicação
 
@@ -47,11 +56,12 @@ Desenvolver o jogo Cannon Game para Android, com base no Capítulo 6 do livro *A
 
 ## Como jogar
 
-1. Toque na tela e mova o dedo para ajustar a mira do canhão.
+1. Toque na tela inicial para iniciar a partida.
+2. Toque na tela e mova o dedo para ajustar a mira do canhão.
 2. Solte o dedo para disparar.
 3. Tente atingir todos os alvos antes que o tempo termine.
 4. Evite atingir o obstáculo, pois ele provoca uma penalidade de tempo.
-5. Ao terminar a partida, selecione **Jogar novamente** para recomeçar.
+5. Ao terminar a partida, selecione **Jogar novamente** para recomeçar ou **Sair** para encerrar o jogo.
 
 ## Referência
 
